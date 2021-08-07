@@ -666,6 +666,7 @@ const FileUpload = () => {
                         <ErrorMessage
                             setErrorMessage={ setErrorMessage }
                             setFilename={ setFilename }
+                            setShowProgressBar={ setShowProgressBar }
                         >
                             { errorMessage }
                         </ErrorMessage> }
@@ -676,7 +677,7 @@ const FileUpload = () => {
                             setFilename={ setFilename }
                             setSuccessMessage={ setSuccessMessage }
                             setUploadedFile={ setUploadedFile }
-                            setShowProgressBar={ setShowProgressBar }                 
+                            setShowProgressBar={ setShowProgressBar }        
                         >
                             { successMessage }
                         </SuccessMessage> 

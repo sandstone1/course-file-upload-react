@@ -167,7 +167,7 @@ import './error-message.styles.scss';
 // remember to destructure off the children prop in the argument below since we will
 // wrap our message with the code below or the ErrorMessage component and the children
 // inside the code below represents our error message
-const ErrorMessage = ( { children, setErrorMessage, setFilename } ) => {
+const ErrorMessage = ( { children, setErrorMessage, setFilename, setShowProgressBar } ) => {
 
     // ==============================
     // create DOM reference
@@ -206,6 +206,7 @@ const ErrorMessage = ( { children, setErrorMessage, setFilename } ) => {
         // after closing the error message, reset the state
         setErrorMessage( '' );
         setFilename( '' );
+        setShowProgressBar( false );
 
         // End of STEP 3
 
