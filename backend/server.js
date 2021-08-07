@@ -298,7 +298,7 @@ app.use( fileUpload() );
 
 
 // ==============================
-// MAKE THE UPLOADS FOLDER A STATIC FOLDER
+// MAKE THE REACT_FILE_UPLOAD/UPLOADS FOLDER A STATIC FOLDER
 // ==============================
 
 // make the uploads folder a static folder
@@ -324,8 +324,9 @@ const __dirname = path.resolve();
 // and remember we didn't need the code below when we were saving the images in the
 // react_file_upload/frontend/public/uploads folder since the public folder is a static folder
 // by default
-app.use( '/uploads', express.static( path.join( __dirname, '/uploads' ) ) );
 
+// remember we have to specify a mount path or " /uploads " for the code below to work
+app.use( '/uploads', express.static( path.join( __dirname, '/uploads' ) ) );
 
 
 // ==============================
@@ -432,7 +433,6 @@ if ( process.env.NODE_ENV === 'production' ) {
     } );
 
 }
-
 
 
 // set the port number
