@@ -612,7 +612,7 @@ const FileUpload = () => {
             // then let's set a a new piece of component state above or
             // " const [ uploadedFile, setUploadedFile ] = useState( '' ); "
             setUploadedFile( { fileName, filePath } );
-
+console.log( filePath );
             // set the success message
             setSuccessMessage( 'Your file was uploaded successfully! Close this message to upload another file.' );
 
@@ -749,7 +749,7 @@ const FileUpload = () => {
                             
                     ) : (
 
-                        console.log( uploadedFile.filePath )
+                        null
 
                     )
 
