@@ -749,7 +749,7 @@ const FileUpload = () => {
                             
                     ) : (
 
-                        null
+                        console.log( uploadedFile.filePath )
 
                     )
 

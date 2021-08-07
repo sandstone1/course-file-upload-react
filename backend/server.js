@@ -365,7 +365,7 @@ app.post(
             // " file.mv( `${ __dirname }/frontend/public/uploads/${ file.name }`, ( error ) => { "
             // to
             // " file.mv( `${ __dirname }/uploads/${ file.name }`, ( error ) => { "
-            file.mv( `https://react-file-upload-sandstone.herokuapp.com/uploads/${ file.name }`, ( error ) => {
+            file.mv( `${ __dirname }/uploads/${ file.name }`, ( error ) => {
 
                 // if the path does not exist
                 if ( error ) {
@@ -382,7 +382,7 @@ app.post(
                         .status( 200 )
                         .json( {
                             fileName : file.name,
-                            filePath : `https://react-file-upload-sandstone.herokuapp.com/uploads/${ file.name }`
+                            filePath : `/uploads/${ file.name }`
                         } );
 
                 }
