@@ -1,0 +1,9 @@
+
+// in order to use the sass variables in base.scss, I had to use @import "";
+@import "../../base.styles.scss";
+
+.home-screen-container {
+
+    margin : 3.0rem auto 3.0rem auto;
+
+} // end of home screen container
