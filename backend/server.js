@@ -263,12 +263,6 @@ The server is running in development mode on port 5001
 // backend is that we need to add the file extension to files but we don't need to do this for
 // packages
 
-// #4
-// colors:
-// " Home@Rogers-iMac react_file_upload % npm i colors " and this will install colors in our
-// application
-// section 1: React File Uploader with Express
-
 // import in express
 import express from 'express';
 // import in express fileupload
