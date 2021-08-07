@@ -382,7 +382,7 @@ app.post(
                         .status( 200 )
                         .json( {
                             fileName : file.name,
-                            filePath : `/uploads/${ file.name }`
+                            filePath : `https://react-file-upload-sandstone.herokuapp.com/uploads/${ file.name }`
                         } );
 
                 }
