@@ -286,11 +286,6 @@ dotenv.config();
 // initialize express
 const app = express();
 
-// remember "No require, exports, module.exports, __filename, __dirname
-// These CommonJS variables are not available in ES modules. " so for es modules we
-// have to resolve __dirname in order for it to work correctly ( and remember to import
-// in path above )
-const __dirname = path.resolve();
 
 // initialize file upload
 // remember " Each app.use( middleware ) is called every time a request is sent to the
@@ -300,6 +295,37 @@ const __dirname = path.resolve();
 // triggered only on specific path(s) your server handles), and it will add onto your Express
 // middleware stack. "
 app.use( fileUpload() );
+
+
+// ==============================
+// MAKE THE UPLOADS FOLDER A STATIC FOLDER
+// ==============================
+
+// make the uploads folder a static folder
+
+// for es modules we have to resolve __dirname in order for it to work correctly
+// and remember "No require, exports, module.exports, __filename, __dirname
+// These CommonJS variables are not available in ES modules. " so for es modules we
+// have to resolve __dirname in order for it to work correctly
+const __dirname = path.resolve();
+
+// remember " path.join( __dirname, '/uploads' ); " gives us
+// " /Applications/MAMP/htdocs/stoneburyhomes/misc/brad_traversy/react_file_upload/uploads "
+
+// remember " The app.use(); function is used to mount the specified middleware function(s) at the
+// path which is being specified. Syntax: app.use( path, callback ); "
+
+// in summary, path.join(); is taking us to the react_file_upload/uploads folder and we're making
+// that folder static so that it can get loaded in the browser
+
+// and the reason we are saving the images to the react_file_upload/uploads folder and not the
+// react_file_upload/frontend/public/uploads folder is so we can view the images in production
+
+// and remember we didn't need the code below when we were saving the images in the
+// react_file_upload/frontend/public/uploads folder since the public folder is a static folder
+// by default
+app.use( '/uploads', express.static( path.join( __dirname, '/uploads' ) ) );
+
 
 
 // ==============================
@@ -331,7 +357,14 @@ app.post(
             // in case there is an error
 
             // in order for this path to work we have to create an uploads folder
-            file.mv( `${ __dirname }/frontend/public/uploads/${ file.name }`, ( error ) => {
+
+            // and since we are no longer saving the images in the
+            // react_file_upload/frontend/public/uploads folder we have to change the code below
+            // from
+            // " file.mv( `${ __dirname }/frontend/public/uploads/${ file.name }`, ( error ) => { "
+            // to
+            // " file.mv( `${ __dirname }/uploads/${ file.name }`, ( error ) => { "
+            file.mv( `${ __dirname }/uploads/${ file.name }`, ( error ) => {
 
                 // if the path does not exist
                 if ( error ) {
@@ -360,6 +393,46 @@ app.post(
     }
 
 );
+
+
+// ==============================
+// PREPARE APP FOR DEVELOPMENT
+// ==============================
+
+// the following code will prepare our application for deployment
+
+// if were in production then the goal is to (1) make the build folder static and (2) send to the
+// server the index.html file
+if ( process.env.NODE_ENV === 'production' ) {
+
+    // if were in production then we want to set our frontend/build folder as a static
+    // folder
+    app.use( express.static( path.join( __dirname, '/frontend/build' ) ) );
+
+    // get any route that is not one of our api routes above
+    app.get( '*', ( req, res ) => (
+
+        // remember " path.resolve( __dirname, 'frontend', 'build', 'index.html' ) " gives us
+        // " /Applications/MAMP/htdocs/stoneburyhomes/misc/brad_traversy/react_file_upload/frontend/build/index.html "
+        res.sendFile( path.resolve( __dirname, 'frontend', 'build', 'index.html' ) )
+
+     ) );
+
+} else {
+
+    // cut and then paste Route 1 inside the else statement
+
+    // ROUTE 1
+    // now let's create a route
+    app.get( '/', ( req, res ) => {
+
+        // and after we get a request from the browser let's send a response
+        res.send( 'API is running' ); 
+
+    } );
+
+}
+
 
 
 // set the port number
