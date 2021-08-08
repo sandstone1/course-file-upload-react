@@ -37,9 +37,10 @@
         background : linear-gradient( to right, $steel-blue-200, $green-200 );
 
         // transition : 2s ease-in-out; // give the progress bar a transition otherwise the progress
-        // bar goes to 100% in a split second
+        // bar goes to 100% in a split second; however, this does work on Heroku since it can
+        // take more than 2 seconds to upload a large image
 
     } // end of div
 
-
 } // end of progress bar container
+

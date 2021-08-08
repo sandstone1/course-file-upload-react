@@ -267,6 +267,8 @@ The server is running in development mode on port 5001
 import express from 'express';
 // import in express fileupload
 import fileUpload from 'express-fileupload';
+// import in our upload routes
+import uploadRoutes from './routes/upload.routes.js';
 // import in colors
 import colors from 'colors';
 // import in dotenv
@@ -299,6 +301,14 @@ app.use( fileUpload() );
 
 
 // ==============================
+// FILE UPLOAD ENPOINT
+// ==============================
+
+// bring in the uploadRoutes
+app.use( '/api/upload', uploadRoutes );
+
+
+// ==============================
 // MAKE THE REACT_FILE_UPLOAD/UPLOADS FOLDER A STATIC FOLDER
 // ==============================
 
@@ -328,73 +338,6 @@ const __dirname = path.resolve();
 
 // remember we have to specify a mount path or " /uploads " for the code below to work
 app.use( '/uploads', express.static( path.join( __dirname, '/uploads' ) ) );
-
-
-// ==============================
-// FILE UPLOAD ENPOINT
-// ==============================
-
-// we only need one endpoint for our file upload and we will send a request from react to the
-// backend and in the request we will send along the file to upload
-app.post(
-
-    // endpoint
-    '/upload',
-
-    // callback function to handle the request from the browser / frontend
-    ( req, res ) => {
-
-        if ( req.files === null ) {
-
-            // remember 400 is a bad request and we will send along some data using the json
-            // data transfer format
-            return res.status( 400 ).json( {  message : 'No file was uploaded.  Please try again.' } )
-
-        } else {
-
-            // set a file variable and we will define " req.files.file " in react
-            const file = req.files.file;
-
-            // create a path of where to save the file and then we will have a callback function
-            // in case there is an error
-
-            // in order for this path to work we have to create an uploads folder
-
-            // and since we are no longer saving the images in the
-            // react_file_upload/frontend/public/uploads folder we have to change the code below
-            // from
-            // " file.mv( `${ __dirname }/frontend/public/uploads/${ file.name }`, ( error ) => { "
-            // to
-            // " file.mv( `${ __dirname }/uploads/${ file.name }`, ( error ) => { "
-            file.mv( `${ __dirname }/uploads/${ file.name }`, ( error ) => {
-
-                // if the path does not exist
-                if ( error ) {
-
-                    // 500 is a server error and we will send the error to the frontend
-                    return res.status( 500 ).send( error );
-
-                } else {
-
-                    // if there is no error then send back a status code of 200 and " The HTTP
-                    // 200 OK success status response code indicates that the request has
-                    // succeeded. " 
-                    res
-                        .status( 200 )
-                        .json( {
-                            fileName : file.name,
-                            filePath : `/uploads/${ file.name }`
-                        } );
-
-                }
-
-            } )
-
-        }
-
-    }
-
-);
 
 
 // ==============================

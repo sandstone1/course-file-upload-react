@@ -538,6 +538,8 @@ const FileUpload = () => {
         // and remember since we specified a proxy in the frontend/package.json file or
         // " "proxy": "http://localhost:5001", " we don't have to specify " localhost:5001 "
         // or put " http://localhost:5001/upload " as our endpoint
+
+        // remember the endpoint points to the backend endpoint which is " /upload "
         const endpoint = '/upload';
 
         const config = {
